@@ -97,4 +97,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  albumCover:{
+    width: 250,
+    height: 250
+  },
+  controls: {
+    flexDirection: 'row'
+  },
+  control: {
+    margin: 20
+  }
 });
