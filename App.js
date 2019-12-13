@@ -50,13 +50,23 @@ const audioBookPlaylist = [
   }
 ]
 
-export default function App() {
-  console.log(audioBookPlaylist[0])
-  return (
+export default class App extends React.Component {
+ state = {
+   isPlaying: false,
+   playbackInstance: null,
+   currentIndex: 0,
+   volume: 1.0,
+   isBuffering: false,
+ }
+
+ render(){
+   return (
     <View style={styles.container}>
       <Text>Ridbay Audio Player</Text>
     </View>
   );
+ }
+  
 }
 
 const styles = StyleSheet.create({
