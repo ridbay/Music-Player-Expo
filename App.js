@@ -1,5 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
+import {Ionicons} from '@expo/vector-icons'
 
 
 const audioBookPlaylist = [
@@ -62,7 +63,27 @@ export default class App extends React.Component {
  render(){
    return (
     <View style={styles.container}>
-      <Text>Ridbay Audio Player</Text>
+      <Image 
+      style={styles.albumCover}
+      source={{
+        uri: 'http://www.archive.org/download/LibrivoxCdCoverArt8/hamlet_1104.jpg'
+      }}
+      />
+      <View style={styles.controls}>
+        <TouchableOpacity style={styles.control} onPress={()=> alert('Back button')}>
+          <Ionicons name="android-skip-backward" size={48} color="#444"/>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.control} onPress={()=> alert('Playbutton')}>
+          {this.state.isPlaying ? (
+            <Ionicons name="android-pause" size={48} color="#444"/>
+          ):(
+            <Ionicons name="android-play-circle" size={48} color="#444"/>
+          )}
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.control} onPress={()=> alert('Forward button')}>
+          <Ionicons name="android-skip-forward" size={48} color="#444"/>
+        </TouchableOpacity>
+      </View>
     </View>
   );
  }
