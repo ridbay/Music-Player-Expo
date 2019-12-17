@@ -205,5 +205,20 @@ const styles = StyleSheet.create({
   },
   control: {
     margin: 20
+  },
+  trackInfo: {
+    padding: 40,
+    backgroundColor: '#fff'
+  },
+  trackInfoText: {
+    textAlign: 'center',
+    flexWrap: 'wrap',
+    color: "#550088"
+  },
+  largeText: {
+    fontSize: 22
+  },
+  smallText: {
+    fontSize: 16
   }
 });
