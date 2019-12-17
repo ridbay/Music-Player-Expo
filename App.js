@@ -93,7 +93,7 @@ export default class App extends React.Component {
         volume
       }
 
-      playbackInstance.setOnPlaybackStatusUpdate(this.OnPlaybackStatusUpdate)
+      playbackInstance.setOnPlaybackStatusUpdate(this.onPlaybackStatusUpdate)
       await playbackInstance.loadAsync(source, status, false)
       this.setState({playbackInstance})
     } catch (error) {
@@ -107,6 +107,41 @@ export default class App extends React.Component {
     }
   }
 
+  handlePlayPause = async () => {
+    const {isPlaying, playbackInstance} = this.state;
+
+    isPlaying ? await playbackInstance.pauseAsync() : await playbackInstance.playAsync();
+
+    this.setState({
+      isPlaying: !isPlaying
+    })
+  }
+
+  handlePreviousTrack = async () => {
+    let {playbackInstance, currentIndex} = this.state;
+    if(playbackInstance){
+      await playbackInstance.unloadAsync()
+      currentIndex < audioBookPlaylist.length - 1 ? (currentIndex -= 1) : (currentIndex = 0)
+      this.setState({
+        currentIndex
+      })
+      this.loadAudio();
+    }
+  }
+
+  handleNextTrack = async ()=>{
+    let {playbackInstance, currentIndex} = this.state;
+
+    if(playbackInstance){
+      await playbackInstance.unloadAsync()
+      currentIndex > audioBookPlaylist.length - 1 ? (currentIndex += 1) : (currentIndex = 0)
+      this.setState({
+        currentIndex
+      })
+      this.loadAudio();
+    }
+    }
+  }
   render() {
     return (
       <View style={styles.container}>
