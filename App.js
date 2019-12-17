@@ -80,7 +80,7 @@ export default class App extends React.Component {
   }
 
   async loadAudio() {
-    const {currentIndex, isPlaying, volume} = this.state
+    const { currentIndex, isPlaying, volume } = this.state
 
     try {
       const playbackInstance = new Audio.Sound()
@@ -95,7 +95,7 @@ export default class App extends React.Component {
 
       playbackInstance.setOnPlaybackStatusUpdate(this.onPlaybackStatusUpdate)
       await playbackInstance.loadAsync(source, status, false)
-      this.setState({playbackInstance})
+      this.setState({ playbackInstance })
     } catch (error) {
       console.log(error)
     }
@@ -108,7 +108,7 @@ export default class App extends React.Component {
   }
 
   handlePlayPause = async () => {
-    const {isPlaying, playbackInstance} = this.state;
+    const { isPlaying, playbackInstance } = this.state;
 
     isPlaying ? await playbackInstance.pauseAsync() : await playbackInstance.playAsync();
 
@@ -118,8 +118,8 @@ export default class App extends React.Component {
   }
 
   handlePreviousTrack = async () => {
-    let {playbackInstance, currentIndex} = this.state;
-    if(playbackInstance){
+    let { playbackInstance, currentIndex } = this.state;
+    if (playbackInstance) {
       await playbackInstance.unloadAsync()
       currentIndex < audioBookPlaylist.length - 1 ? (currentIndex -= 1) : (currentIndex = 0)
       this.setState({
@@ -129,10 +129,10 @@ export default class App extends React.Component {
     }
   }
 
-  handleNextTrack = async ()=>{
-    let {playbackInstance, currentIndex} = this.state;
+  handleNextTrack = async () => {
+    let { playbackInstance, currentIndex } = this.state;
 
-    if(playbackInstance){
+    if (playbackInstance) {
       await playbackInstance.unloadAsync()
       currentIndex > audioBookPlaylist.length - 1 ? (currentIndex += 1) : (currentIndex = 0)
       this.setState({
@@ -140,35 +140,52 @@ export default class App extends React.Component {
       })
       this.loadAudio();
     }
-    }
   }
-  render() {
-    return (
-      <View style={styles.container}>
-        <Image
-          style={styles.albumCover}
-          source={{
-            uri: 'http://www.archive.org/download/LibrivoxCdCoverArt8/hamlet_1104.jpg'
-          }}
-        />
-        <View style={styles.controls}>
-          <TouchableOpacity style={styles.control} onPress={() => alert('Back button')}>
-            <Ionicons name="ios-skip-backward" size={48} color="#444" />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.control} onPress={() => alert('Playbutton')}>
-            {this.state.isPlaying ? (
-              <Ionicons name="ios-pause" size={48} color="#444" />
-            ) : (
-                <Ionicons name="ios-play-circle" size={48} color="#444" />
-              )}
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.control} onPress={() => alert('Forward button')}>
-            <Ionicons name="ios-skip-forward" size={48} color="#444" />
-          </TouchableOpacity>
-        </View>
+}
+
+renderFileInfo () {
+  const {playbackInstance, currentIndex} = this.state;
+  return playbackInstance ? (
+    <View style={styles.trackInfo}>
+      <Text style={[styles.trackInfoText, styles.largeText]}>
+        {audioBookPlaylist[currentIndex].title}
+      </Text >
+      <Text style={[styles.trackInfoText, styles.smallText]}>
+      {audioBookPlaylist[currentIndex].author}
+      </Text>
+      <Text style={[styles.trackInfoText, styles.smallText]}>
+      {audioBookPlaylist[currentIndex].source}
+      </Text>
+    </View>
+  ): null
+}
+render() {
+  return (
+    <View style={styles.container}>
+      <Image
+        style={styles.albumCover}
+        source={{
+          uri: 'http://www.archive.org/download/LibrivoxCdCoverArt8/hamlet_1104.jpg'
+        }}
+      />
+      <View style={styles.controls}>
+        <TouchableOpacity style={styles.control} onPress={() => alert('Back button')}>
+          <Ionicons name="ios-skip-backward" size={48} color="#444" />
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.control} onPress={() => alert('Playbutton')}>
+          {this.state.isPlaying ? (
+            <Ionicons name="ios-pause" size={48} color="#444" />
+          ) : (
+              <Ionicons name="ios-play-circle" size={48} color="#444" />
+            )}
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.control} onPress={() => alert('Forward button')}>
+          <Ionicons name="ios-skip-forward" size={48} color="#444" />
+        </TouchableOpacity>
       </View>
-    );
-  }
+    </View>
+  );
+}
 
 }
 
