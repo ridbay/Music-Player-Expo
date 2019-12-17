@@ -92,8 +92,18 @@ export default class App extends React.Component {
         shouldPlay: isPlaying,
         volume
       }
+
+      playbackInstance.setOnPlaybackStatusUpdate(this.OnPlaybackStatusUpdate)
+      await playbackInstance.loadAsync(source, status, false)
+      this.setState({playbackInstance})
     } catch (error) {
-      
+      console.log(error)
+    }
+
+    OnPlaybackStatusUpdate = status => {
+      this.setState({
+        isBuffering: status.isBuffering
+      })
     }
   }
 
