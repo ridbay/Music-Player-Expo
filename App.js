@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
-import {Ionicons} from '@expo/vector-icons'
+import {Ionicons} from '@expo/vector-icons';
+import {Audio} from 'expo-av';
 
 
 const audioBookPlaylist = [
@@ -60,6 +61,24 @@ export default class App extends React.Component {
    isBuffering: false,
  }
 
+ async componentDidMount(){
+
+  try {
+    await Audio.setAudioModeAsync({
+      allowsRecordingIOS: false,
+      interruptionModeIOS: Audio.INTERRUPTION_MODE_IOS_DO_NOT_MIX,
+      playsInSilentModeIOS: true,
+      interruptionModeAndroid: Audio.INTERRUPTION_MODE_ANDROID_DUCK_OTHERS,
+      shouldDuckAndroid: true,
+      staysActiveInBackground: true,
+      playThroughEarpieceAndroid: true,
+    })
+    this.loadAudio()
+  } catch (e) {
+    console.log(e)
+  }
+}
+
  render(){
    return (
     <View style={styles.container}>
@@ -71,17 +90,17 @@ export default class App extends React.Component {
       />
       <View style={styles.controls}>
         <TouchableOpacity style={styles.control} onPress={()=> alert('Back button')}>
-          <Ionicons name="android-skip-backward" size={48} color="#444"/>
+          <Ionicons name="ios-skip-backward" size={48} color="#444"/>
         </TouchableOpacity>
         <TouchableOpacity style={styles.control} onPress={()=> alert('Playbutton')}>
           {this.state.isPlaying ? (
-            <Ionicons name="android-pause" size={48} color="#444"/>
+            <Ionicons name="ios-pause" size={48} color="#444"/>
           ):(
-            <Ionicons name="android-play-circle" size={48} color="#444"/>
+            <Ionicons name="ios-play-circle" size={48} color="#444"/>
           )}
         </TouchableOpacity>
         <TouchableOpacity style={styles.control} onPress={()=> alert('Forward button')}>
-          <Ionicons name="android-skip-forward" size={48} color="#444"/>
+          <Ionicons name="ios-skip-forward" size={48} color="#444"/>
         </TouchableOpacity>
       </View>
     </View>
