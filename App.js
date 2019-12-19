@@ -161,6 +161,7 @@ renderFileInfo() {
 render() {
   return (
     <View style={styles.container}>
+      <Text>RidSound</Text>
       <Image
         style={styles.albumCover}
         source={{
