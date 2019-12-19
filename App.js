@@ -141,24 +141,23 @@ export default class App extends React.Component {
       this.loadAudio();
     }
   }
-}
 
-renderFileInfo () {
-  const {playbackInstance, currentIndex} = this.state;
-  return playbackInstance ? (
-    <View style={styles.trackInfo}>
-      <Text style={[styles.trackInfoText, styles.largeText]}>
-        {audioBookPlaylist[currentIndex].title}
-      </Text >
-      <Text style={[styles.trackInfoText, styles.smallText]}>
-      {audioBookPlaylist[currentIndex].author}
-      </Text>
-      <Text style={[styles.trackInfoText, styles.smallText]}>
-      {audioBookPlaylist[currentIndex].source}
-      </Text>
-    </View>
-  ): null
-}
+renderFileInfo() {
+    const { playbackInstance, currentIndex } = this.state
+    return playbackInstance ? (
+      <View style={styles.trackInfo}>
+        <Text style={[styles.trackInfoText, styles.largeText]}>
+          {audioBookPlaylist[currentIndex].title}
+        </Text>
+        <Text style={[styles.trackInfoText, styles.smallText]}>
+          {audioBookPlaylist[currentIndex].author}
+        </Text>
+        <Text style={[styles.trackInfoText, styles.smallText]}>
+          {audioBookPlaylist[currentIndex].source}
+        </Text>
+      </View>
+    ) : null
+  }
 render() {
   return (
     <View style={styles.container}>
